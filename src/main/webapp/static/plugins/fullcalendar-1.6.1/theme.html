@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+<head>
+<link rel='stylesheet' href='cupertino/theme.css' />
+<link href='fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='jquery/jquery-1.9.1.min.js'></script>
+<script src='jquery/jquery-ui-1.10.2.custom.min.js'></script>
+<script src='fullcalendar/fullcalendar.min.js'></script>
+<script>
+
+	$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		$('#calendar').fullCalendar({
+			theme: true,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			header:{ 
+left:'title', 
+center:'month,basicWeek,basicDay,agendaWeek,agendaDay', 
+right:'prevYear prev today next nextYear' 
+}, 
+buttonText:{ 
+month:'月视图', 
+basicWeek:'周视图', 
+basicDay:'日视图', 
+agendaWeek:'议事周视图', 
+agendaDay:'议事日视图', 
+today:'今天' 
+}, 
+aspectRatio:2, 
+weekMode:'variable',//每周固定，月份高度不固定。fixed固定六周,liquid月份高度固定，每周高度不固定。 
+theme:false, 
+titleFormat:{ 
+month:'yyyy年MMMM', 
+week:"yyyy年MMMd日{'&#8212;'[yyyy年][MMM]d日}", 
+day:'yyyy-MM-d dddd' 
+}, 
+buttonIcons:{ 
+
+}, 
+firstDay:1,//作用周视图，默认周几开始，0星期天，1星期一。。。。默认为0 
+weekMode:'variable',//默认fixed总是显示6周的格子。liquid，variable根据月份显示4，5，6周其中一个，liquid的总体高度固定。variable格子高度固定。 
+height:600,//注意不加单位，包括header和主体部分的高度。 
+//timeFormat:'HH:mm',//全部视图使用这个时间样式 
+timeFormat:{ 
+week:'HH:mm{-HH:mm}', 
+day:'HH:mm' 
+}, 
+columnFormat:{//header底下的第一行; 
+month:'dddd', 
+week:'ddd MM-dd', 
+day:'dddd MM-dd' 
+}, 
+allDayText:'全天',//allDay全天事件的文本 
+axisFormat:'HH:mm',//agenda时间轴的格式 
+allDaySlot:true,//是否显示全天，默认为true 
+monthNames:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'], 
+monthNamesShort:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'], 
+dayNames:['星期日','星期一','星期二','星期三','星期四','星期五','星期六'], 
+dayNamesShort:['周日','周一','周二','周三','周四','周五','周六'], 
+firstHour:0,//默认是6，只对agenda视图有效果 
+defaultEventMinutes:120,//如果事件没有结束时间，默认120分钟长度 
+viewDisplay:function(view){ 
+//view.visStart是包括灰色的日期 
+//view.start不包括灰色的日期 
+alert(view.visStart+"------"+view.start); 
+}, 
+dayClick:function(date,allDay,jsEvent,view){ 
+alert("视图名:"+view.name); 
+alert("当前时间:"+date); 
+alert("是否全天事件:"+allDay); 
+alert("javascript针对的事件:"+jsEvent.clientX); 
+}, 
+eventClick:function(event,jsEvent,view){ 
+alert("针对点击的事件名称:"+event.title); 
+alert("针对javascript的事件:"+jsEvent.clientX); 
+alert("视图名:"+view.name); 
+if(event.url){//当点击事件的时候，如果时间有url属性，默认跳转到url,通过return false来阻止默认行为。 
+window.open(event.url); 
+return false; 
+} 
+}, 
+
+/*eventMouseover:function(event,jsEvent,view){ 
+alert("鼠标经过某个事件的标题"+event.title); 
+alert("鼠标经过某个事件位置"+jsEvent.clientX); 
+alert("鼠标经过某个事件视图名称"+view.title); 
+}, 
+eventMouseout:functin(event,jsEvent,view){ 
+},*/ 
+selectable:true,//选择的时候高亮 
+selectHelper:true,//只对agenda有效果 
+/* 
+selectHelper:function(start,end){ 
+//alert(start); 
+},*/ 
+unselectAuto:true,//是否清除高度选择的部分。默认为true 
+
+
+			editable: true,
+			
+			events: [
+				{
+					title: 'All Day Event房东十分激动司法鉴定收费',
+					start: new Date(y, m, 1)
+				},
+				{
+					title: 'Long Event',
+					start: new Date(y, m, d-5),
+					end: new Date(y, m, d-2)
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d-3, 16, 0),
+					allDay: false
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d+4, 16, 0),
+					allDay: false
+				},
+				{
+					title: 'Meeting',
+					start: new Date(y, m, d, 10, 30),
+					allDay: false
+				},
+				{
+					title: 'Lunch',
+					start: new Date(y, m, d, 12, 0),
+					end: new Date(y, m, d, 14, 0),
+					allDay: false
+				},
+				{
+					title: 'Birthday Party',
+					start: new Date(y, m, d+1, 19, 0),
+					end: new Date(y, m, d+1, 22, 30),
+					allDay: false
+				},
+				{
+					title: 'Click for Google',
+					start: new Date(y, m, 28),
+					end: new Date(y, m, 29),
+					url: 'http://google.com/'
+				}
+			]
+		});
+		
+	});
+
+</script>
+<style>
+
+	body {
+		margin-top: 40px;
+		text-align: center;
+		font-size: 13px;
+		font-family:"微软雅黑";
+		}
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+		}
+
+</style>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>
